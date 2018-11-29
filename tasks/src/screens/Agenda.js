@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, ImageBackground, FlatList, TouchableOpacity,Platform } from 'react-native'
+import { StyleSheet, Text, View, ImageBackground, FlatList, TouchableOpacity, Platform } from 'react-native'
+import ActionButton from 'react-native-action-button'
 import moment from 'moment'
 import 'moment/locale/pt-br'
 import todayImage from '../../assets/imgs/today.jpg'
 import commonStyles from '../commonStyles';
 import Task from '../components/Task'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import AddTask from './AddTask'
 
 export default class Agenda extends Component {
     state = {
@@ -26,6 +28,20 @@ export default class Agenda extends Component {
         ],
         visibleTasks: [],
         showDONEtasks: true,
+        showAddTask: false,
+    }
+
+    addTask = task => {
+        const tasks = [...this.state.tasks]
+
+        tasks.push({
+            id: Math.random(),
+            desc: task.desc,
+            estimateAt: task.date,
+            doneAt: null
+        })
+
+        this.setState({ tasks, showAddTask: false }, this.filterTasks)
     }
 
     filterTasks = () => {
@@ -63,6 +79,7 @@ export default class Agenda extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <AddTask isVisible={this.state.showAddTask} onSave={this.addTask} onCancel={() => this.setState({ showAddTask: false })} />
                 <ImageBackground source={todayImage} style={styles.background}>
                     <View style={styles.iconBar}>
                         <TouchableOpacity onPress={this.toggleFilter}>
@@ -77,6 +94,7 @@ export default class Agenda extends Component {
                 <View style={styles.taskContainer}>
                     <FlatList data={this.state.visibleTasks} keyExtractor={item => `${item.id}`} renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} />} />
                 </View>
+                <ActionButton buttonColor={commonStyles.colors.today} onPress={() => { this.setState({ showAddTask: true }) }} />
             </View>
         )
     }
@@ -111,7 +129,7 @@ const styles = StyleSheet.create({
         flex: 7,
     },
     iconBar: {
-        marginTop: Platform.OS === 'ios'? 30:10,
+        marginTop: Platform.OS === 'ios' ? 30 : 10,
         marginHorizontal: 20,
         flexDirection: 'row',
         justifyContent: 'flex-end',
