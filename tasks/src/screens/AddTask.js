@@ -97,7 +97,7 @@ var styles = StyleSheet.create({
         color: commonStyles.colors.default,
     },
     header: {
-        fontFamily: commonStyles.fotnFamily,
+        fontFamily: commonStyles.fontFamily,
         backgroundColor: commonStyles.colors.default,
         color: commonStyles.colors.secondary,
         textAlign: 'center',
@@ -105,7 +105,7 @@ var styles = StyleSheet.create({
         fontSize: 15,
     },
     input: {
-        fontFamily: commonStyles.fotnFamily,
+        fontFamily: commonStyles.fontFamily,
         width: '90%',
         height: 40,
         marginTop: 10,
@@ -116,7 +116,7 @@ var styles = StyleSheet.create({
         borderRadius: 6,
     },
     date: {
-        fontFamily: commonStyles.fotnFamily,
+        fontFamily: commonStyles.fontFamily,
         fontSize: 20,
         marginLeft: 10,
         marginTop: 10,
